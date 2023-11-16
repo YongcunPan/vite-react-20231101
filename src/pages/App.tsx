@@ -62,7 +62,15 @@ function App() {
           <DemoC />
         </div>
       </Modal>
-      <Drawer open={drawerOpen} onClose={() => setDrawerOpen(false)}>
+      <Drawer
+        open={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+        extra={<Button type="primary">submit</Button>}
+        footer={
+          <div>
+            <Button type="primary">submit</Button>
+          </div>
+        }>
         <div>
           <DemoC />
         </div>

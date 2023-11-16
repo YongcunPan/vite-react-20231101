@@ -10,7 +10,9 @@ import App from "./layout/index";
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persist}>
-      <ConfigProvider locale={zhCN} theme={{ token: { borderRadius: 20 } }}>
+      <ConfigProvider
+        locale={zhCN}
+        theme={{ token: { colorPrimary: "#e84648", borderRadius: 20 } }}>
         <AntdApp>
           <AntdFunctionUtil />
           <App />
