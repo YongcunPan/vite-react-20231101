@@ -33,7 +33,6 @@ const useInView = (
 
     return () => {
       if (targetRef?.current) {
-        // eslint-disable-next-line react-hooks/exhaustive-deps
         observer.unobserve(targetRef.current);
       }
     };

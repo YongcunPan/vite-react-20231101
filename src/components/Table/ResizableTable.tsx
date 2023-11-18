@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { Table } from "antd";
 import { Resizable } from "react-resizable";
 import "./ResizableTable.css";
+// import useDeepEffect from "@/hooks/useDeepEffect";
+import { CustomRecordType, ProTableProps } from "./data";
 
 const ResizableTitle = (props: any) => {
   const { width, onResize, ...restProps } = props;
@@ -17,27 +19,13 @@ const ResizableTitle = (props: any) => {
   );
 };
 
-const ResizableTable = () => {
-  const dataSource = () => {
-    const data = [];
-    for (let i = 0; i < 5; i++) {
-      data.push({ key: i, name: `xxxx`, age: 32, address: "xxxxxxxxxxxxx" });
-    }
-    return data;
-  };
-  const [cols, setCols] = useState([
-    { title: "姓名", dataIndex: "name", key: "name", width: 100 },
-    {
-      title: "年龄",
-      dataIndex: "age",
-      key: "age",
-      width: 100,
-    },
-    { title: "住址", dataIndex: "address", key: "address" },
-  ]);
-  const [columns, setColumns] = useState<any[]>([]);
-
+const ResizableTable = (props: ProTableProps<CustomRecordType>) => {
   const components = { header: { cell: ResizableTitle } };
+  const { columns = [], ...restProps } = props;
+  const [cols, setCols] = useState(columns);
+  const [resColumns, setResColumns] = useState<any[]>([]);
+
+  useEffect(() => setCols(columns), [columns]);
 
   const handleResize =
     (index: number) =>
@@ -51,7 +39,7 @@ const ResizableTable = () => {
     };
 
   useEffect(() => {
-    setColumns(
+    setResColumns(
       cols.map((col: any, index: number) => {
         return {
           ...col,
@@ -64,14 +52,7 @@ const ResizableTable = () => {
     );
   }, [cols]);
 
-  return (
-    <Table
-      components={components}
-      columns={columns}
-      size="small"
-      dataSource={dataSource()}
-    />
-  );
+  return <Table {...restProps} components={components} columns={resColumns} />;
 };
 
 export default ResizableTable;
